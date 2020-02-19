@@ -14,7 +14,16 @@ class Todo extends Component {
  
   onSubmitHandle(event) {
     event.preventDefault();
- 
+var s = "!@#$%^&*()+=-[]\\';,./{}|\":<>?";
+  var   str=document.getElementById('02').value;
+if (s.indexOf(str.charAt(0)) !== -1)
+      {
+         alert ("Cannot allow leading Special character");
+        document.getElementById('02').value="";
+         return false;
+      }
+
+ else{
     this.setState({
       mockData: [...this.state.mockData, {
         id: Date.now(),
@@ -25,8 +34,9 @@ class Todo extends Component {
     });
  
     event.target.item.value = '';
+
  
- 
+}
   }
  
   onDeleteHandle() {
@@ -45,16 +55,30 @@ if(r===true){
   }
  
   onEditHandle(event) {
+      let p=window.confirm("are u sure");
+      if(p===true){
     this.setState({
       edit: true,
       id: arguments[0],
       title: arguments[1]
     });
+}
   }
  
   onUpdateHandle(event) {
     event.preventDefault();
- 
+
+var s = "!@#$%^&*()+=-[]\\';,./{}|\":<>?";
+  var   str=document.getElementById('01').value;
+if (s.indexOf(str.charAt(0)) !== -1){
+      
+         alert ("Cannot allow leading Special character");
+        document.getElementById('02').value="";
+      }
+
+else{
+ let z=window.confirm("are u sure");
+ if(z===true){
     this.setState({
       mockData: this.state.mockData.map(item => {
         if (item.id === this.state.id) {
@@ -69,11 +93,14 @@ if(r===true){
     this.setState({
       edit: false
     });
+}
+  }
   }
  
   onCompleteHandle() {
     let id = arguments[0];
- 
+ let k=window.confirm("are u sure")
+ if(k===true){
     this.setState({
       mockData: this.state.mockData.map(item => {
         if (item.id === id) {
@@ -84,12 +111,13 @@ if(r===true){
         return item;
       })
     });
+}
   }
  
   renderEditForm() {
     if (this.state.edit) {
       return <form onSubmit={this.onUpdateHandle.bind(this)} className="header">
-        <input type="text" name="updatedItem" className="item" defaultValue={this.state.title} required/>
+        <input type="text" name="updatedItem" className="item" defaultValue={this.state.title} required id="01"/>
         <button className="update-add-item">Update</button>
       </form>
     }
@@ -101,7 +129,7 @@ if(r===true){
         {this.renderEditForm()}
         <div className="header">
         <form onSubmit={this.onSubmitHandle.bind(this)}>
-          <input type="text" name="item" className="item" required />
+          <input type="text" name="item" className="item" required id="02"/>
           <button className="btn-add-item">Add</button>
         </form>
         </div>
@@ -121,3 +149,15 @@ if(r===true){
 }
  
 export default Todo;
+
+
+/*var iChars = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+      if(this.state.text===""){
+        swal("Required", "This Field Is Required", "warning");
+        return false;
+      }
+      else if (iChars.indexOf(this.state.text.charAt(0)) !== -1)
+      {
+        swal("Special Symbol", "This Field 1st Char should be Alphabet or Number ", "warning");
+         return false;
+      }*/
